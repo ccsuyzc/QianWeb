@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+// @/  在jsconfig.json中只是做联想提示,在vite.config.js里面的才是实际路径转换
+import HelloWorld from '@/components/HelloWorld.vue'
 </script>
 
 <template>

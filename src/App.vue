@@ -8,7 +8,7 @@
  <div>
 <!-- 一级路由出口组件 -->
 <RouterView/>
-<div class="test" style="height:1000px">
+<div class="test">
   test scss
 </div>
  </div>

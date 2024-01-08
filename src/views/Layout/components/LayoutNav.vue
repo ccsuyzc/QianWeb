@@ -1,25 +1,73 @@
 <script setup>
+import router from '@/router';
+import {onMounted, reactive} from "vue"
+const pushtoCart = ()=>{
+  router.push('/cart')
+}
 
+
+
+const data = reactive({
+  user:{
+  },
+  isLogin:false
+})
+
+const newU = ()=>{
+     data.user  = JSON.parse(localStorage.getItem('user'))
+     if (data.user){
+       data.isLogin = true
+       console.log("data",data);
+     }
+}
+
+onMounted(() => {
+   newU();
+})
+
+const pushtoLogin = ()=>{
+  router.push({
+    name:"login"
+  })
+}
+
+const deleteLogin = ()=>{
+  localStorage.removeItem('user')
+  localStorage.removeItem('token')
+  data.user = {}
+  data.isLogin = false
+}
+
+const pushtoUser = ()=>{
+  if (localStorage.getItem('token')){
+    router.push({
+      name:"user"
+    })
+  }else{
+    router.push({
+      name:"login"
+    })
+  }
+}
 </script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="true">
-          <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
+        <template v-if="data.isLogin">
           <li>
-            <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+            <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="deleteLogin">
               <template #reference>
-                <a href="javascript:;">退出登录</a>
+                <a  href="javascript:;">退出登录</a>
               </template>
             </el-popconfirm>
           </li>
-          <li><a href="javascript:;">我的订单</a></li>
-          <li><a href="javascript:;">会员中心</a></li>
+          <li><a @click="pushtoCart">购物车</a></li>
+          <li><a @click="pushtoUser">个人中心</a></li>
         </template>
         <template v-else>
-          <li><a href="javascript:;">请先登录</a></li>
+          <li><a @click="pushtoLogin" href="javascript:;">请先登录</a></li>
           <li><a href="javascript:;">帮助中心</a></li>
           <li><a href="javascript:;">关于我们</a></li>
         </template>

@@ -1,8 +1,8 @@
 <script setup>
 import LayoutNav from './components/LayoutNav.vue'
 import LayoutHeader from './components/LayoutHeader.vue'
-import LayoutFooter from './components/LayoutFooter.vue'
 import LayoutFIxed from './components/LayoutFIxed.vue';
+
 import { useCategoryStore } from '@/stores/category';
 import {onMounted} from 'vue'
 
@@ -14,9 +14,11 @@ onMounted(()=>{
 </script>
 
 <template>
+  <!-- 固定头部 -->
   <LayoutFIxed/>
+    <!-- 导航栏 -  -->
   <LayoutNav />
+  <!-- 头部 -->
   <LayoutHeader />
   <RouterView />
-  <LayoutFooter />
 </template>

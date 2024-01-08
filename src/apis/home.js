@@ -7,6 +7,18 @@ import httpInstance from '@/utils/http'
 //         url:'home/banner'
 //     })
 // }
+
+
+// 得到轮播图数据
+export function getShow(){
+  return httpInstance(
+    {
+      url:"http://127.0.0.1:9090/api/commoditys/isshow",
+      method:"GET",
+    }
+  )
+}
+
 export function getBannerAPI (params = {}) {
   // 默认为1 商品为2
   const { distributionSite = '1' } = params

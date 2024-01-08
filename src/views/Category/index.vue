@@ -1,80 +1,60 @@
 <script setup>
-import { getCategoryAPI } from '@/apis/category';
-import { ref, watch,onMounted } from "vue";
+import { getCategoryAll, getCategoryData } from "@/apis/category";
+import { ref, watch, onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
-import { getBannerAPI } from '@/apis/home'
-import  GoodsItem from '../Home/components/Goodsitem.vue'
+import { getBannerAPI } from "@/apis/home";
+import HomePanel from "@/views/Home/components/HomePanel.vue";
+
+const data = reactive({
+  list: [],
+});
+
 // 获取数据
-const categoryData = ref({})
-const route = useRoute()
+const categoryData = ref({});
+const route = useRoute();
 const getCategory = async () => {
-    const res = await getCategoryAPI(route.params.id)
-    categoryData.value = res.result
-}
+  const res = await getCategoryData(route.params.id);
+  // categoryData.value = res.result
+  console.log("res", res);
+  if (res.code == 200) {
+    data.list = res.obj;
+  }
+};
 
-// 部分代码省略
-
-
-// 获取banner
-const bannerList = ref([])
-
-const getBanner = async () => {
-  const res = await getBannerAPI({
-    distributionSite: '2'
-  })
-  console.log(res)
-  bannerList.value = res.result
-}
-
-onMounted(() => getBanner())
-
-
-watch(route,()=>{
-    getCategory()
-},{
-  deep:true,
-  immediate:true
-})
+watch(
+  route,
+  () => {
+    getCategory();
+  },
+  {
+    deep: true,
+    immediate: true,
+  }
+);
 </script>
 
 <template>
   <div class="top-category">
     <div class="container m-top-20">
-      <!-- 面包屑 -->
-      <div class="bread-container">
-        <el-breadcrumb separator=">">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{categoryData.name}}</el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
-      <!-- 轮播图 -->
-      <div class="home-banner">
-        <el-carousel height="500px">
-          <el-carousel-item v-for="item in bannerList" :key="item.id">
-          <img :src="item.imgUrl" alt="">
-         </el-carousel-item>
-        </el-carousel>
-      </div>
-      <div class="sub-list">
-
-  <h3>全部分类</h3>
-  <ul>
-    <li v-for="i in categoryData.children" :key="i.id">
-      <RouterLink to="/">
-        <img :src="i.picture" />
-        <p>{{ i.name }}</p>
-      </RouterLink>
-    </li>
-  </ul>
-</div>
-<div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
-  <div class="head">
-    <h3>- {{ item.name }}-</h3>
-  </div>
-  <div class="body">
-    <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
-  </div>
-</div>
+      <HomePanel title="" sub-title="">
+        <ul class="goods-list">
+          <li v-for="item in data.list" :key="item.id">
+            <RouterLink :to="{
+              name: 'commoditydetails',
+              params: {
+                id: item.id,
+              },
+            }">
+              <img
+                :src="'http://localhost:9090/api/images/' + item.image1"
+                alt=""
+              />
+              <p class="name">{{ item.name }}</p>
+              <p class="price">{{ item.price }}元</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </HomePanel>
     </div>
   </div>
 </template>
@@ -84,7 +64,7 @@ watch(route,()=>{
 .top-category {
   h3 {
     font-size: 28px;
-    color: #666;
+    color: #ffffff;
     font-weight: normal;
     text-align: center;
     line-height: 100px;
@@ -92,7 +72,7 @@ watch(route,()=>{
 
   .sub-list {
     margin-top: 20px;
-    background-color: #fff;
+    background-color: #ffffff;
 
     ul {
       display: flex;
@@ -102,7 +82,6 @@ watch(route,()=>{
       li {
         width: 168px;
         height: 160px;
-
 
         a {
           text-align: center;
@@ -156,6 +135,45 @@ watch(route,()=>{
 
   .bread-container {
     padding: 25px 0;
+  }
+}
+</style>
+
+<style scoped lang='scss'>
+.goods-list {
+  display: flex;
+  justify-content: space-between;
+  height: 406px;
+
+  li {
+    width: 306px;
+    height: 406px;
+
+    background: #ffffff;
+    transition: all .5s;
+
+    &:hover {
+      transform: translate3d(0, -3px, 0);
+      box-shadow: 0 3px 8px rgb(0 0 0 / 20%);
+    }
+
+    img {
+      width: 306px;
+      height: 306px;
+    }
+
+    p {
+      font-size: 22px;
+      padding-top: 12px;
+      text-align: center;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .price {
+      color: $priceColor;
+    }
   }
 }
 </style>

@@ -8,9 +8,6 @@
  <div>
 <!-- 一级路由出口组件 -->
 <RouterView/>
-<div class="test">
-  test scss
-</div>
  </div>
 </template>
 

@@ -14,7 +14,7 @@ const caregorystore = useCategoryStore();
   <header class='app-header'>
     <div class="container">
       <h1 class="logo">
-        <RouterLink to="/">小兔鲜</RouterLink>
+         <div>蛋糕商城</div>
       </h1>
       <ul class="app-header-nav">
         <li class="home">
@@ -46,14 +46,15 @@ const caregorystore = useCategoryStore();
 
   .logo {
     width: 200px;
-
-    a {
+    font-size: 50px;
+    margin: 20px;
+    /* a {
       display: block;
       height: 132px;
       width: 100%;
       text-indent: -9999px;
       background: url('@/assets/images/logo.png') no-repeat center 18px / contain;
-    }
+    } */
   }
 
   .app-header-nav {
@@ -65,11 +66,11 @@ const caregorystore = useCategoryStore();
   
     li {
       margin-right: 40px;
-      width: 38px;
+      width: 100px;
       text-align: center;
   
       a {
-        font-size: 16px;
+        font-size: 14px;
         line-height: 32px;
         height: 32px;
         display: inline-block;

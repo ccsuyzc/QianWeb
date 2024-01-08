@@ -1,13 +1,13 @@
 <script setup>
 defineProps({
-// 定义
-title:{
-    type:String
-},
-subTitle:{
-    type:String
-}
-})
+  // 定义
+  title: {
+    type: String,
+  },
+  subTitle: {
+    type: String,
+  },
+});
 </script>
 
 
@@ -15,13 +15,13 @@ subTitle:{
   <div class="home-panel">
     <div class="container">
       <div class="head">
-         <!-- 主标题和副标题 -->
+        <!-- 主标题和副标题 -->
         <h3>
           {{ title }}<small>{{ subTitle }}</small>
         </h3>
       </div>
       <!-- 主体内容区域 -->
-      <slot />
+      <slot></slot>
     </div>
   </div>
 </template>

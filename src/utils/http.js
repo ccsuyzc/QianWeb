@@ -9,9 +9,13 @@ const httpInstance = axios.create({
 // 拦截器
 
 // axios请求拦截器
-httpInstance.interceptors.request.use(config => {
-    return config
-  }, e => Promise.reject(e))
+httpInstance.interceptors.request.use((req)=>{
+  const token = localStorage.getItem('token')
+  if (token) {
+    req.headers.token = token;
+  }
+  return req
+})
   
 // axios响应式拦截器
 httpInstance.interceptors.response.use(res => res.data, e => {

@@ -7,12 +7,17 @@ import { useCategoryStore } from '@/stores/category';
 
 const caregorystore = useCategoryStore();
 
+
+const deleteLogin = ()=>{
+  localStorage.removeItem('user')
+  localStorage.removeItem('token')
+}
 </script>
 
 <template>
   <div class="app-header-sticky" :class="{show: y>78}">
     <div class="container">
-      <RouterLink class="logo" to="/" />
+      <div class="logo">蛋糕商城</div>
       <!-- 导航区域 -->
       <ul class="app-header-nav">
         <li class="home" v-for="item in caregorystore.caregoryList" :key="item.id">
@@ -21,8 +26,7 @@ const caregorystore = useCategoryStore();
       </ul>
 
       <div class="right">
-        <RouterLink to="/">品牌</RouterLink>
-        <RouterLink to="/">专题</RouterLink>
+        <a @click="deleteLogin">退出</a>
       </div>
     </div>
   </div>
@@ -59,7 +63,7 @@ const caregorystore = useCategoryStore();
   .logo {
     width: 200px;
     height: 80px;
-    background: url("@/assets/images/logo.png") no-repeat right 2px;
+    font-size: 50px;
     background-size: 160px auto;
   }
 
@@ -71,7 +75,7 @@ const caregorystore = useCategoryStore();
     border-left: 2px solid $xtxColor;
 
     a {
-      width: 38px;
+      width: 60px;
       margin-right: 40px;
       font-size: 16px;
       line-height: 1;
@@ -92,11 +96,11 @@ const caregorystore = useCategoryStore();
 
   li {
     margin-right: 40px;
-    width: 38px;
+    width: 100px;
     text-align: center;
 
     a {
-      font-size: 16px;
+      font-size: 14px;
       line-height: 32px;
       height: 32px;
       display: inline-block;
